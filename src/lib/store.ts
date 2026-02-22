@@ -37,6 +37,7 @@ interface StoreState {
   bulkUpdatePrices: (percentage: number) => void;
   acceptRequisition: (id: string, momoCode: string) => void;
   rejectRequisition: (id: string) => void;
+  addRequisition: (requisition: Requisition) => void;
   addLicense: (doc: LicenseDoc) => void;
 }
 
@@ -134,6 +135,8 @@ export const useStore = create<StoreState>((set) => ({
         req.id === id ? { ...req, status: "rejected" as const } : req
       ),
     })),
+  addRequisition: (requisition) =>
+    set((state) => ({ requisitions: [requisition, ...state.requisitions] })),
   addLicense: (doc) =>
     set((state) => ({ licenses: [...state.licenses, doc] })),
 }));
